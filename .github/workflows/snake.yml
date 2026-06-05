@@ -1,0 +1,32 @@
+name: Generate Snake Animation
+
+on:
+  schedule:
+    # Har 12 ghante mein automatically update hoga (UTC time)
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+    # GitHub Actions page se manually bhi trigger kar sakte ho
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # Step 1: Snake SVG generate karo (light + dark dono)
+      - name: Generate github-snake animation
+        uses: Platane/snk@v3
+        with:
+          github_user_name: skgpt254
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+
+      # Step 2: Generated files ko 'output' branch mein push karo
+      - name: Push snake SVGs to output branch
+        uses: crazy-max/ghaction-github-pages@v3
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
