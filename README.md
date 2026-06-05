@@ -77,41 +77,12 @@ I am a pre-final year B.Tech student in Computer Science Engineering at GLA Univ
 
 ---
 
-### 📊 Real-Time GitHub Analytics
+### 📊 GitHub Contributions
 
 <div align="center">
-  <table>
-    <tr>
-      <td align="center" width="50%">
-        <img src="https://github-readme-stats.vercel.app/api?username=skgpt254&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true" alt="GitHub Stats" />
-      </td>
-      <td align="center" width="50%">
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=skgpt254&theme=tokyonight&hide_border=true&include_all_commits=true&count_private=true&layout=compact" alt="Top Languages" />
-      </td>
-    </tr>
-  </table>
-  <br>
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=skgpt254&theme=tokyo-night&hide_border=true" width="100%" alt="GitHub Activity Graph" />
-</div>
-
-<br>
-
-<div align="center">
-  <img src="https://streak-stats.demolab.com/?user=skgpt254&theme=tokyonight&hide_border=true" alt="GitHub Streak" />
-</div>
-
-<br>
-
-<p align="center">
-  <a href="https://github.com/skgpt254">
-    <img src="https://github-profile-trophy.vercel.app/?username=skgpt254&theme=tokyonight&no-frame=true&no-bg=true&margin-w=4" alt="GitHub Trophies" />
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=tokyonight" alt="Random Dev Quote" />
-</p>
-
-<div align="center">
-  <img src="https://komarev.com/ghpvc/?username=skgpt254&color=38BDF8&style=flat-square&label=Profile+Views" alt="Profile Views" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/output/github-snake.svg" />
+    <img alt="github contribution snake animation" src="https://raw.githubusercontent.com/skgpt254/skgpt254/output/github-snake.svg" />
+  </picture>
 </div>
