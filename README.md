@@ -58,8 +58,12 @@ Pre-final year Computer Science undergraduate at GLA University, Mathura, workin
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/projects-dark.svg" />
-    <img width="100%" src="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/projects.svg" alt="Projects" />
+    <img width="100%" src="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/projects.svg" alt="Projects" usemap="#projectmap" />
   </picture>
+  <map name="projectmap">
+    <area shape="rect" coords="2,8,580,194" href="https://github.com/skgpt254/Cyber_Mini-Project" target="_blank" alt="eRDS" />
+    <area shape="rect" coords="596,8,1174,194" href="https://github.com/skgpt254/PacketDive" target="_blank" alt="PacketDive" />
+  </map>
 </div>
 
 ### Activity
