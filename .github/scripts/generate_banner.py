@@ -2,10 +2,12 @@
 """
 Generate the profile hero banner — banner.svg (light) and banner-dark.svg.
 
-Both are transparent (no background rect) so they sit directly on
-GitHub's page background in either theme, switched via a <picture> tag
-in README.md. Colorful accents, a couple of small playful animations,
-otherwise same layout as before.
+Transparent background, name/role/bio only (no facts row, no link row —
+those live as real clickable badges in README.md instead, since links
+inside an SVG do nothing once it's embedded via <img>). One continuous
+animation (the ring around the monogram slowly rotates, forever) so
+there's motion that's actually visible rather than a one-shot fade that
+finishes before you notice it.
 
 Usage:
     python3 generate_banner.py
@@ -13,6 +15,7 @@ Usage:
 import base64
 import io
 import os
+import math
 import html
 
 from PIL import Image, ImageOps, ImageEnhance
@@ -24,19 +27,6 @@ CONFIG = {
     "bio": [
         "Pre-final year CS undergraduate at GLA University, building",
         "kernel-level defenses, network detection engines, and ML-driven security tooling.",
-    ],
-    "facts": [
-        ("Rank", "Top 2% on TryHackMe (3M+ users) \u00b7 7th of 9,000+ teams at Hack IITK CTF", "\U0001F3C6"),
-        ("Focus", "Kernel security (eBPF), network defense, applied ML for threat detection", "\U0001F6E1"),
-        ("Base", "Mathura, Uttar Pradesh, India", "\U0001F4CD"),
-        ("Now", "Cyber Security Intern, APCSIP-2026", "\u26A1"),
-    ],
-    "links": [
-        ("Email", "mailto:guptask0722@gmail.com"),
-        ("LinkedIn", "https://linkedin.com/in/sandeshkgupta/"),
-        ("GitHub", "https://github.com/skgpt254"),
-        ("LeetCode", "https://leetcode.com/u/sandeshkgpt"),
-        ("Portfolio", "https://sandesh-gupta-portfolio.vercel.app/"),
     ],
     "github_handle": "github.com/skgpt254",
     "photo": "../../assets/portrait_source.jpg",
@@ -59,7 +49,7 @@ THEMES = {
 SERIF = "Georgia,'Iowan Old Style','Palatino Linotype',serif"
 MONO  = "ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace"
 
-W, H = 1180, 480
+W, H = 1180, 450
 MARGIN = 56
 
 def esc(s):
@@ -112,35 +102,6 @@ def duotone_portrait(path, shadow_hex, highlight_hex, disp_w, disp_h,
     b64 = base64.b64encode(buf.getvalue()).decode()
     return f"data:image/png;base64,{b64}"
 
-# ------------------------------------------------------------- HELPERS ---
-def wrap_link_row(links, x, y, accent, muted, font_size=12.5, gap=30, char_w=7.35):
-    out = []
-    cx = x
-    for label, href in links:
-        out.append(
-            f'<a href="{esc(href)}" target="_blank">'
-            f'<circle cx="{cx:.1f}" cy="{y-4}" r="2.6" fill="{accent}"/>'
-            f'<text x="{cx+10:.1f}" y="{y}" font-family="{MONO}" font-size="{font_size}" '
-            f'fill="{muted}">{esc(label)}</text></a>'
-        )
-        cx += 10 + len(label) * char_w + gap
-    return "".join(out)
-
-def fact_rows(facts, x, y, ink, muted, line_h=27, label_w=88):
-    out = []
-    for i, (label, value, icon) in enumerate(facts):
-        ly = y + i * line_h
-        out.append(f'<g>')
-        out.append(f'<animateTransform attributeName="transform" type="translate" '
-                    f'from="0 6" to="0 0" dur="0.4s" begin="{0.55 + i*0.1:.2f}s" fill="freeze" '
-                    f'calcMode="spline" keySplines="0.2 0 0.2 1" keyTimes="0;1"/>')
-        out.append(f'<text x="{x}" y="{ly}" font-size="13">{icon}</text>')
-        out.append(f'<text x="{x+22}" y="{ly}" font-family="{MONO}" font-size="12" '
-                    f'fill="{muted}">{esc(label)}</text>')
-        out.append(f'<text x="{x+label_w}" y="{ly}" font-family="{MONO}" font-size="12.5" '
-                    f'fill="{ink}">{esc(value)}</text></g>')
-    return "".join(out)
-
 # --------------------------------------------------------------- BUILD ---
 def build(cfg, theme_name):
     t = THEMES[theme_name]
@@ -152,7 +113,6 @@ def build(cfg, theme_name):
     photo_uri = duotone_portrait(photo_path, t["duo_shadow"], t["duo_highlight"], portrait_w, portrait_h)
 
     text_x = px + portrait_w + 44
-    text_right = W - MARGIN
 
     s = []
     a = s.append
@@ -163,10 +123,20 @@ def build(cfg, theme_name):
 
     accent, ink, muted, line = t["accent"], t["ink"], t["muted"], t["line"]
 
-    # ---- header ----
-    a(f'<circle cx="{MARGIN+18}" cy="52" r="18" fill="none" stroke="{accent}" stroke-width="1.6"/>')
+    # ---- header: monogram with a continuously rotating ring (real, ----
+    # ---- ongoing motion — not a one-shot transition) --------------------
+    ring_cx, ring_cy, ring_r = MARGIN + 18, 52, 18
+    circumference = 2 * math.pi * ring_r
+    dash = circumference * 0.72
+    gap = circumference - dash
+    a(f'<g>'
+      f'<animateTransform attributeName="transform" type="rotate" '
+      f'from="0 {ring_cx} {ring_cy}" to="360 {ring_cx} {ring_cy}" dur="6s" repeatCount="indefinite"/>'
+      f'<circle cx="{ring_cx}" cy="{ring_cy}" r="{ring_r}" fill="none" stroke="{accent}" '
+      f'stroke-width="1.6" stroke-linecap="round" '
+      f'stroke-dasharray="{dash:.1f} {gap:.1f}"/></g>')
     initials = "".join(w[0] for w in cfg["name"].split()[:2]).upper()
-    a(f'<text x="{MARGIN+18}" y="57" text-anchor="middle" font-family="{SERIF}" font-weight="700" '
+    a(f'<text x="{ring_cx}" y="57" text-anchor="middle" font-family="{SERIF}" font-weight="700" '
       f'font-size="14" fill="{ink}">{esc(initials)}</text>')
     a(f'<text x="{W-MARGIN}" y="57" text-anchor="end" font-family="{MONO}" font-size="12.5" '
       f'fill="{muted}">{esc(cfg["github_handle"])}</text>')
@@ -180,13 +150,13 @@ def build(cfg, theme_name):
       f'<image x="{px}" y="{py}" width="{portrait_w}" height="{portrait_h}" '
       f'href="{photo_uri}" preserveAspectRatio="xMidYMid slice"/></g>')
 
-    # ---- name / role / rule ----
-    name_y = py + 46
+    # ---- name / role / rule — vertically balanced alongside the portrait ---
+    name_y = py + 80
     a(f'<text x="{text_x}" y="{name_y}" font-family="{SERIF}" font-weight="700" font-size="40" '
       f'fill="{ink}">{esc(cfg["name"])}</text>')
     a(f'<text x="{text_x}" y="{name_y+27}" font-family="{MONO}" font-size="14.5" '
-      f'fill="{muted}">{esc(cfg["role"])} \U0001F44B</text>')
-    rule_y = name_y + 44
+      f'fill="{muted}">{esc(cfg["role"])}</text>')
+    rule_y = name_y + 61
     a(f'<line x1="{text_x}" y1="{rule_y}" x2="{text_x+64}" y2="{rule_y}" stroke="{accent}" stroke-width="2.5">'
       f'<animate attributeName="x2" from="{text_x}" to="{text_x+64}" '
       f'dur="0.7s" begin="0.2s" fill="freeze" calcMode="spline" keySplines="0.3 0 0.2 1" keyTimes="0;1"/></line>')
@@ -196,19 +166,6 @@ def build(cfg, theme_name):
     for i, line_txt in enumerate(cfg["bio"]):
         a(f'<text x="{text_x}" y="{bio_y + i*20}" font-family="{SERIF}" font-size="15.5" '
           f'fill="{ink}" opacity="0.9">{esc(line_txt)}</text>')
-
-    # ---- divider ----
-    div_y = bio_y + len(cfg["bio"]) * 20 + 14
-    a(f'<line x1="{text_x}" y1="{div_y}" x2="{text_right}" y2="{div_y}" stroke="{line}"/>')
-
-    # ---- facts, staggered fade-up ----
-    facts_y = div_y + 30
-    a(fact_rows(cfg["facts"], text_x, facts_y, ink, muted))
-
-    # ---- footer ----
-    footer_rule_y = H - 42
-    a(f'<line x1="{MARGIN}" y1="{footer_rule_y}" x2="{W-MARGIN}" y2="{footer_rule_y}" stroke="{line}"/>')
-    a(wrap_link_row(cfg["links"], MARGIN, footer_rule_y + 26, accent, muted))
 
     a('</svg>')
     return "".join(s)
