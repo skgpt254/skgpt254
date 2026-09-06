@@ -41,8 +41,6 @@ Pre-final year Computer Science undergraduate at GLA University, Mathura, workin
   <img src="https://img.shields.io/badge/SQL-4479A1?style=flat-square" alt="SQL" />
 </p>
 
-**Core CS:** Data Structures, Algorithms, OOP, Operating Systems, Computer Networks, DBMS
-
 **Developer Tools:** Git, GitHub, Docker, Linux (Ubuntu, Kali)
 <p>
   <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git" />
@@ -59,7 +57,9 @@ Pre-final year Computer Science undergraduate at GLA University, Mathura, workin
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript" />
 </p>
 
-**Applied Security:** Network Analysis, Vulnerability Assessment, Digital Forensics, Burp Suite, Wireshark, Nmap, Metasploit, OWASP ZAP
+**Core CS:** Data Structures, Algorithms, OOP, Operating Systems, Computer Networks, DBMS
+
+**Applied Security:** Burp Suite, Wireshark, Nmap, Metasploit, OWASP ZAP, Network Analysis, Vulnerability Assessment, Digital Forensics
 <p>
   <img src="https://img.shields.io/badge/Burp_Suite-FF6633?style=flat-square&logo=burpsuite&logoColor=white" alt="Burp Suite" />
   <img src="https://img.shields.io/badge/Wireshark-1679A7?style=flat-square&logo=wireshark&logoColor=white" alt="Wireshark" />
@@ -98,7 +98,4 @@ Pre-final year Computer Science undergraduate at GLA University, Mathura, workin
 ### Certifications
 
 Google Cybersecurity Professional Certificate &nbsp;&middot;&nbsp; Certified LLM Security Professional (CLLMSP) &nbsp;&middot;&nbsp; Certified Online Fraud Prevention Specialist (COFPS) &nbsp;&middot;&nbsp; AI for Cybersecurity (LinkedIn Learning) &nbsp;&middot;&nbsp; Intro to Penetration Testing (Security Blue Team) &nbsp;&middot;&nbsp; Full Stack Web Development (Internshala)
-
 <br/>
-
-<div align="center"><sub>guptask0722@gmail.com &nbsp;&middot;&nbsp; Mathura, Uttar Pradesh, India</sub></div>
