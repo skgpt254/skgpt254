@@ -55,26 +55,20 @@ Pre-final year Computer Science undergraduate at GLA University, Mathura, workin
 
 ### Projects
 
-<table>
-<tr>
-<td width="50%">
-<a href="https://github.com/skgpt254/Cyber_Mini-Project">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/erds-dark.svg" />
-    <img width="100%" src="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/erds.svg" alt="eRDS" />
-  </picture>
-</a>
-</td>
-<td width="50%">
-<a href="https://github.com/skgpt254/PacketDive">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/packetdive-dark.svg" />
-    <img width="100%" src="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/packetdive.svg" alt="PacketDive" />
-  </picture>
-</a>
-</td>
-</tr>
-</table>
+<p align="center">
+  <a href="https://github.com/skgpt254/Cyber_Mini-Project">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/erds-dark.svg" />
+      <img width="49%" src="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/erds.svg" alt="eRDS" />
+    </picture>
+  </a>
+  <a href="https://github.com/skgpt254/PacketDive">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/packetdive-dark.svg" />
+      <img width="49%" src="https://raw.githubusercontent.com/skgpt254/skgpt254/projects/packetdive.svg" alt="PacketDive" />
+    </picture>
+  </a>
+</p>
 
 ### Activity
 
