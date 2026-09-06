@@ -7,6 +7,18 @@
 
 <br/>
 
+<p align="center">
+  <a href="mailto:guptask0722@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
+  <a href="https://linkedin.com/in/sandeshkgupta/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="https://github.com/skgpt254"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+  <a href="https://leetcode.com/u/sandeshkgpt"><img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" alt="LeetCode" /></a>
+  <a href="https://tryhackme.com/p/sandeshkgupta"><img src="https://img.shields.io/badge/TryHackMe-212C42?style=for-the-badge&logo=tryhackme&logoColor=white" alt="TryHackMe" /></a>
+  <a href="https://profile.hackthebox.com/profile/019c9f97-bb38-734d-a5d5-c916377725f8"><img src="https://img.shields.io/badge/HackTheBox-111927?style=for-the-badge&logo=hackthebox&logoColor=9FEF00" alt="HackTheBox" /></a>
+  <a href="https://sandesh-gupta-portfolio.vercel.app/"><img src="https://img.shields.io/badge/Portfolio-0F172A?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio" /></a>
+</p>
+
+<br/>
+
 ### About
 
 Pre-final year Computer Science undergraduate at GLA University, Mathura, working across penetration testing, Linux kernel security, and applied ML for threat detection. Currently a Cyber Security Intern with the Amroha Police Cyber Security Internship Program (APCSIP-2026), assisting with malware analysis, digital forensics, and VAPT on operational environments.
