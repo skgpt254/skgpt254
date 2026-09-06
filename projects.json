@@ -10,11 +10,5 @@
     "repo": "skgpt254/PacketDive",
     "description": "Multithreaded Python NDR engine on Scapy with kernel-level BPF pre-filtering and Isolation Forest anomaly detection",
     "tags": ["Python", "Scapy", "ML"]
-  },
-  {
-    "name": "Security Automation Platform",
-    "repo": "skgpt254/security-automation-platform",
-    "description": "Async FastAPI backend automating recon-to-report: DNS enumeration, HTTP probing, JS asset discovery, vuln scanning",
-    "tags": ["FastAPI", "asyncio", "SQLAlchemy"]
   }
 ]
