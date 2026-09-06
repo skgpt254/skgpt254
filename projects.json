@@ -1,0 +1,20 @@
+[
+  {
+    "name": "eRDS",
+    "repo": "skgpt254/Cyber_Mini-Project",
+    "description": "eBPF CO-RE hook intercepting file-write syscalls to block ransomware, with a Go entropy agent and auto SIGKILL response",
+    "tags": ["eBPF", "Go", "Linux Kernel"]
+  },
+  {
+    "name": "PacketDive",
+    "repo": "skgpt254/PacketDive",
+    "description": "Multithreaded Python NDR engine on Scapy with kernel-level BPF pre-filtering and Isolation Forest anomaly detection",
+    "tags": ["Python", "Scapy", "ML"]
+  },
+  {
+    "name": "Security Automation Platform",
+    "repo": "skgpt254/security-automation-platform",
+    "description": "Async FastAPI backend automating recon-to-report: DNS enumeration, HTTP probing, JS asset discovery, vuln scanning",
+    "tags": ["FastAPI", "asyncio", "SQLAlchemy"]
+  }
+]
