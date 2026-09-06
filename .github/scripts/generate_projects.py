@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
 """
-Generate the projects panel — projects.svg (light) and projects-dark.svg.
+Generate one card SVG per project (light + dark each) instead of a single
+combined panel.
 
-Transparent background (sits on GitHub's page in either theme), one of a
-small rotating accent palette per card for a bit of personality, a
-staggered pop-in on load, and a gentle pulse on the "updated recently"
-dot. Still no external logo files — a lettermark per card instead.
+Why: GitHub strips <map>/<area> tags from README HTML (not on its
+sanitizer's allowlist), and links inside an SVG do nothing once it's
+embedded via <img> anyway — so there is no way to make regions *inside*
+one big image individually clickable on GitHub. The only pattern that
+reliably works is the same one shields.io badges use: each project gets
+its OWN small image, wrapped in a plain markdown/HTML link in README.md:
 
-IMPORTANT: any element that should be visible even where SMIL animation
-isn't supported (some renderers, screenshot tools, older clients) must
-default to its final, visible state and only use <animate> to add motion
-on top — never a static opacity="0" that only animation removes.
+    [<img src="erds.svg">](https://github.com/skgpt254/Cyber_Mini-Project)
+
+Output: out/<slug>.svg and out/<slug>-dark.svg per project, e.g.
+out/erds.svg, out/erds-dark.svg, out/packetdive.svg, out/packetdive-dark.svg
 
 Usage:
     python3 generate_projects.py merged.json out/
 """
 import html
 import json
-import math
+import re
 import sys
 from datetime import datetime, timezone
 
@@ -32,14 +35,15 @@ ACCENTS_DARK = ["#2DD9B5", "#E4A46F", "#9AA0F5"]
 SERIF = "Georgia,'Iowan Old Style','Palatino Linotype',serif"
 MONO  = "ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace"
 
-W = 1180
 CARD_W = 578
 CARD_H = 186
-GAP = 16
-MARGIN = 2
 
 def esc(s):
     return html.escape(str(s), quote=True)
+
+def slugify(name):
+    s = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+    return s or "project"
 
 def rel_time(iso):
     if not iso:
@@ -77,20 +81,15 @@ def top_language(languages):
     lang, val = max(languages.items(), key=lambda kv: kv[1])
     return lang, val / total
 
-def card(p, x, y, t, accent, delay):
+def card_svg(p, t, accent):
     e = []
     a = e.append
     repo = p.get("repo", "").strip()
     repo = repo.replace("https://github.com/", "").replace("http://github.com/", "").rstrip("/")
-    href = f"https://github.com/{esc(repo)}"
     line, ink, muted = t["line"], t["ink"], t["muted"]
 
-    a(f'<a href="{href}" target="_blank">')
-    # pop-in: default fully visible/in-place; animation only adds a bounce on top
-    a(f'<g transform="translate({x},{y})">')
-    a(f'<animateTransform attributeName="transform" type="translate" additive="sum" '
-      f'from="0 10" to="0 0" dur="0.45s" begin="{delay:.2f}s" fill="freeze" '
-      f'calcMode="spline" keySplines="0.25 0.1 0.25 1" keyTimes="0;1"/>')
+    a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{CARD_W}" height="{CARD_H}" '
+      f'viewBox="0 0 {CARD_W} {CARD_H}" role="img" aria-label="{esc(p.get("name",""))}">')
 
     a(f'<rect x="0.5" y="0.5" width="{CARD_W-1}" height="{CARD_H-1}" rx="12" '
       f'fill="none" stroke="{t["panel_stroke"]}"/>')
@@ -138,7 +137,7 @@ def card(p, x, y, t, accent, delay):
         a(f'<rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="4" rx="2" fill="{line}"/>')
         a(f'<rect x="{bar_x}" y="{bar_y}" width="{bar_w*frac:.1f}" height="4" rx="2" fill="{accent}">'
           f'<animate attributeName="width" from="0" to="{bar_w*frac:.1f}" dur="0.6s" '
-          f'begin="{delay+0.15:.2f}s" fill="freeze" calcMode="spline" keySplines="0.2 0 0.2 1" keyTimes="0;1"/></rect>')
+          f'fill="freeze" calcMode="spline" keySplines="0.2 0 0.2 1" keyTimes="0;1"/></rect>')
         a(f'<text x="{bar_x+bar_w+10}" y="{bar_y+4.5}" font-family="{MONO}" font-size="10" '
           f'fill="{muted}">{esc(lang)} {frac*100:.0f}%</text>')
 
@@ -146,36 +145,20 @@ def card(p, x, y, t, accent, delay):
     a(f'<text x="{CARD_W-20}" y="{168+4.5}" text-anchor="end" font-family="{MONO}" font-size="10.5" '
       f'fill="{muted}">\u2605 {stars} &#8226; updated {rel_time(p.get("pushed_at"))}</text>')
 
-    a('</g>')
-    a('</a>')
-    return "".join(e)
-
-def build(projects, theme_name):
-    t = THEMES[theme_name]
-    accents = ACCENTS_DARK if theme_name == "dark" else ACCENTS
-    rows = math.ceil(len(projects) / 2)
-    header_h = 8
-    H = header_h + rows * (CARD_H + GAP)
-    s = []
-    a = s.append
-    a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
-      f'role="img" aria-label="Projects">')
-    for i, p in enumerate(projects):
-        x = MARGIN + (i % 2) * (CARD_W + GAP)
-        y = header_h + (i // 2) * (CARD_H + GAP)
-        accent = accents[i % len(accents)]
-        a(card(p, x, y, t, accent, delay=i * 0.1))
     a('</svg>')
-    return "".join(s)
+    return "".join(e)
 
 if __name__ == "__main__":
     src = sys.argv[1] if len(sys.argv) > 1 else "merged.json"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "."
     with open(src) as f:
         projects = json.load(f)
-    for theme_name, suffix in (("light", ""), ("dark", "-dark")):
-        svg = build(projects, theme_name)
-        path = f"{outdir}/projects{suffix}.svg"
-        with open(path, "w") as f:
-            f.write(svg)
-        print(f"wrote {path}: {len(projects)} projects, {len(svg)//1024}KB")
+    for i, p in enumerate(projects):
+        slug = slugify(p.get("name", f"project-{i}"))
+        for theme_name, suffix in (("light", ""), ("dark", "-dark")):
+            accents = ACCENTS_DARK if theme_name == "dark" else ACCENTS
+            svg = card_svg(p, THEMES[theme_name], accents[i % len(accents)])
+            path = f"{outdir}/{slug}{suffix}.svg"
+            with open(path, "w") as f:
+                f.write(svg)
+            print(f"wrote {path} ({len(svg)//1024}KB)")
